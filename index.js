@@ -35,7 +35,7 @@ const mainMenu = () => {
         }
         else{
             //build file function
-            writeFileAsync('index.html', renderHTML())
+            writeFileAsync('index.html', createHTML())
         }
     })
 };
@@ -140,7 +140,7 @@ const createManager = (answers) => {
     </div>
       </div>
     </div>
-        ` + managerCard;
+        ` ;
 };
 
 const createIntern = (answers) => {
@@ -180,5 +180,34 @@ const createEngineer = (answers) => {
     </div>
         ` + engineerCard;
 };
+
+const createHTML = () => {
+    `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8"> 
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <title>Team Profile</title>
+    </head>
+    <body>
+      <div class="container">
+        <h1 class="text-center">Your employees:</h1>
+        </div>
+      </div>
+      <div class="container">
+        <div class="justify-content-center">     
+            ${managerCard}
+        </div>
+        <div class="justify-content-center"> 
+            ${engineerCard}
+        </div>
+        <div class="justify-content-center">
+            ${internCard}
+        </div>
+    </body>
+    </html>`;
+    
+}
 
 mainMenu();
