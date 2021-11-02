@@ -160,7 +160,7 @@ const createIntern = (answers) => {
       </div>
     </div>
         ` + internCard;
-}
+};
 
 const createEngineer = (answers) => {
     const engineer = new Engineer (answers.name, answers.id, answers.email, answers.github)
@@ -179,6 +179,6 @@ const createEngineer = (answers) => {
       </div>
     </div>
         ` + engineerCard;
-}
+};
 
 mainMenu();
