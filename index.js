@@ -1,7 +1,12 @@
 const inquirer = require('inquirer');
+const fs = require('fs');
+const util = require('util');
+
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
+
+const writeFileAsync = util.promisify(fs.writeFile);
 
 const mainMenu = () => {
     inquirer.prompt([{
@@ -57,8 +62,9 @@ const askManager = () => {
             name: "officeNumber",
             message: "Enter Manager Office Number"
         }
-    ]).then(answers => {
-        const manager = new Manager (answers.switch)
+    ]).then((answers) => {
+        mainMenu()
+        createManager(answers)
     })
 }
 
@@ -84,8 +90,9 @@ const askIntern = () => {
             name: "school",
             message: "Enter Interns School:"
         }
-    ]).then(answers => {
-        const manager = new Intern (answers.switch)
+    ]).then((answers) => {
+        mainMenu()
+        createIntern(answers)
     })
 };
 
@@ -111,8 +118,67 @@ const askEngineer = () => {
             name: "officeNumber",
             message: "Enter Engineers Github:"
         }
-    ]).then(answers => {
-        const manager = new Manager (answers.switch)
+    ]).then.then((answers) => {
+        mainMenu()
+        createEngineer(answers)
     })
+};
+
+const createManager = (answers) => {
+    const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber)
+    managerCard = `
+    <div class="card col text-center"> 
+      <div class="card-header">
+        <h2 class="card-title">${manager.getRole()}</h5>
+        <h3 class="card-subtitle mb-2">${manager.name}</h6>
+        <div style="width: 100%;">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">ID: ${manager.id}</li>
+        <li class="list-group-item">Email: <a href="mailto:${manager.email}">${manager.email}</a></li>
+        <li class="list-group-item">Office Number: ${manager.officeNumber}</li>
+      </ul>
+    </div>
+      </div>
+    </div>
+        ` + managerCard;
+};
+
+const createIntern = (answers) => {
+    const intern = new Intern (answers.name, answers.id, answers.email, answers.school)
+    internCard = `
+    <div class="card col text-center"> 
+      <div class="card-header">
+        <h2 class="card-title">${intern.getRole()}</h5>
+        <h3 class="card-subtitle mb-2">${intern.name}</h6>
+        <div style="width: 100%;">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">ID: ${intern.id}</li>
+        <li class="list-group-item">Email: <a href="mailto:${intern.email}">${intern.email}</a></li>
+        <li class="list-group-item">Office Number: ${intern.school}</li>
+      </ul>
+    </div>
+      </div>
+    </div>
+        ` + internCard;
 }
+
+const createEngineer = (answers) => {
+    const engineer = new Engineer (answers.name, answers.id, answers.email, answers.github)
+    managerCard = `
+    <div class="card col text-center"> 
+      <div class="card-header">
+        <h2 class="card-title">${engineer.getRole()}</h5>
+        <h3 class="card-subtitle mb-2">${engineer.name}</h6>
+        <div style="width: 100%;">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">ID: ${engineer.id}</li>
+        <li class="list-group-item">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></li>
+        <li class="list-group-item">Office Number: ${engineer.github}</li>
+      </ul>
+    </div>
+      </div>
+    </div>
+        ` + engineerCard;
+}
+
 mainMenu();
